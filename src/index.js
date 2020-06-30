@@ -1,14 +1,18 @@
 require('./models/users')
+require('./models/track')
+require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
-const authRoutes = require('../src/routes/authRoutes')
 const bodyParser = require('body-parser')
+const authRoutes = require('./routes/authRoutes')
+const trackRoutes = require('./routes/trackRoutes')
 const requireAuth = require('./middleware/requireAuth')
-require('dotenv').config()
 
 const app = express()
 app.use(bodyParser.json())
 app.use(authRoutes)
+app.use(trackRoutes)
 
 const mongoUri = `mongodb+srv://admin:${process.env.MONGO_ADMIN_PW}@cluster0-ukzos.mongodb.net/<dbname>?retryWrites=true&w=majority`
 mongoose.connect(mongoUri, {
